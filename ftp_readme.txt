@@ -1,0 +1,74 @@
+Aim: To create an Application Level ​ File​ Sharing​ Protocol with support for download and upload
+
+I have done it in python using socket programming
+
+The system has​ 2 clients (acting as servers simultaneously)
+listening to the communication channel for requests and waiting to share
+files (avoiding collisions) using an ​ application layer protocol​ (like FTP/HTTP).
+● Each client has the ability to do the following :
+○ ​ Know the files present​​ on each others machines in the
+designated shared folders.
+○ ​ Download ​ files​ from this shared folder.
+● The system periodically checks​ for any changes made to the shared folders.
+● File transfer incorporates ​ MD5​ checksum​ to handle file transfer errors.
+
+First run the server by python server.py then run the client by python client.py and type the commands as specified below
+
+Specifications:
+1. IndexGet ​ flag (args)
+
+○ can request the display of the shared files on the connected system.
+○ the history of requests made by either clients is maintained at
+each of the clients respectively.
+○ the ​ flag ​ variable can be ​ shortlist, longlist or regex​ .
+
+■ shortlist : ​
+flag would mean that the client only wants to know the
+names of files between a specific set of timestamps. The sample
+query
+is as below.
+● $> IndexGet ​ shortlist <start​ time​ stamp> <end​ time​ stamp>
+● Output : ​includes ‘name’, ‘size’, ‘timestamp’ and ‘type’ of the
+files between the start and end time stamps.
+
+■ longlist : ​ flag would mean that client wants to know the entire listing of
+the shared folder/directory including ‘name’, ‘size’, ‘timestamp’ and ‘type’ of the
+files.
+● $> IndexGet ​ longlist
+● Output : ​ similar to above, but with complete file listing.
+
+
+2.FileHash ​ flag (args) :
+
+ ○ this command indicates that the client wants to check if any of the files
+on the other end have been changed. The flag variable can take two
+values, ​ verify and ​ checkall​
+
+■ verify : ​ flag checks for the specific file name provided as
+command line argument and return its ‘checksum’ and ‘last​ modified’
+timestamp.
+● $> FileHash ​ verify <filename>
+● Output : ​ checksum and last​ modified timestamp of the input file.
+
+
+■ checkall : ​ flag checks perform what ‘verify’ does for all the files
+in the shared folder.
+(HINT : this command can be used for the periodic check of changes in
+the files of shared folders)
+● $> FileHash ​ checkall
+● Output : filename, checksum and last​ modified timestamp of all
+the files in the shared directory.
+
+
+3. FileDownload ​ flag (args):  Used to download
+files from the shared folder of connected user to our shared folder.
+○ the flag variable can take the value ​ TCP ​ or ​ UDP ​ depending on the
+users request.
+○ If a socket is not available, it is created and both clients
+use this socket for file transfer.
+■ $> FileDownload <filename>
+■ Output : ​contains the filename, filesize, last​ modified timestamp
+and the MD5​ hash of the requested file.
+
+
+
